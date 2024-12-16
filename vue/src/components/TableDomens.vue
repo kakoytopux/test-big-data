@@ -54,7 +54,8 @@
   export default {
     data() {
       return {
-        domains: []
+        domains: [],
+        openPopup: false
       }
     },
 

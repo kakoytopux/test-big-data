@@ -1,7 +1,7 @@
 <?php
   try {
     $conn = new PDO('mysql:host=localhost:3306; dbname=test-big-data', 'root', 'root');
-
+    
     $conn->query(
       "CREATE TABLE IF NOT EXISTS user (
         id INT PRIMARY KEY AUTO_INCREMENT,
