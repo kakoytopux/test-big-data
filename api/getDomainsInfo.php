@@ -67,10 +67,10 @@
       http_response_code(500);
       echo json_encode([
         'message' => 'Непредвиденная ошибка',
-        'exception' => $exception
+        'exception' => $exception->getMessage()
       ]);
     }
   } else {
-    http_response_code(400);
+    http_response_code(405);
     echo json_encode(['message' => 'Неправильный метод запроса']);
   }
