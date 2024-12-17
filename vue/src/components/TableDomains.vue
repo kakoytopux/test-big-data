@@ -57,6 +57,7 @@
       :closePopupScreen="closePopupScreen"
       :domainsInfo="domainsInfo"
       :contacts="contacts"
+      :contactsVisits="contactsVisits"
     />
   </section>
 </template>
@@ -74,6 +75,7 @@
         domains: [],
         domainsInfo: {},
         contacts: [],
+        contactsVisits: [],
         popupState: false
       }
     },
@@ -123,7 +125,7 @@
           },
         })
         .then(res => res.ok ? res.json() : Promise.reject(res))
-        .then(res => console.log(res))
+        .then(res => this.contactsVisits = res)
         .catch(err => console.error(err));
       },
 

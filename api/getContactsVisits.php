@@ -9,11 +9,17 @@
 
       $response = [];
 
-      // foreach ($contactsData as $contactData) {
+      foreach ($contactsData as $contactData) {
+        $id = $contactData['visit_id'];
         
-      // }
-      
-      http_response_code(200);
+        if (!isset($response[$id])) {
+          $response[$id] = ['visit_id' => $id, 'info' => []];
+        }
+
+        $response[$id]['info'][] = $contactData['info'];
+      }
+
+      http_response_code(response_code: 200);
       echo json_encode($response);
     } catch (Exception $exception) {
       http_response_code(500);

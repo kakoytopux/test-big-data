@@ -34,6 +34,33 @@
           </li>
         </ul>
       </div>
+
+      <div class="popup__contacts-container">
+        <h2>Контакты посетителей</h2>
+
+        <div class="popup__contacts-visits">
+          <ul
+            class="popup__contacts-visits-lists"
+            v-for="contactsVisit in contactsVisits"
+            :key="contactsVisit.visit_id"
+          >
+            <li>
+              visitId: {{ contactsVisit.visit_id }}
+            </li>
+          
+            <li>
+              Кол-во контактов: {{ contactsVisit.info.length }}
+            </li>
+            
+            <li
+              v-for="(info, index) in contactsVisit.info"
+              :key="index"
+            >
+              {{ info }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -43,7 +70,8 @@ export default {
   props: {
     closePopupScreen: Function,
     domainsInfo: Object,
-    contacts: Array
+    contacts: Array,
+    contactsVisits: Array
   },
 };
 </script>
@@ -105,5 +133,17 @@ export default {
   flex-direction: column;
   gap: 5px;
   margin-top: 5px;
+}
+
+.popup__contacts-visits {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.popup__contacts-visits-lists {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 </style>
