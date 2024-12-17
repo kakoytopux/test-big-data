@@ -71,7 +71,7 @@ export default {
     closePopupScreen: Function,
     domainsInfo: Object,
     contacts: Array,
-    contactsVisits: Array
+    contactsVisits: Object
   },
 };
 </script>
