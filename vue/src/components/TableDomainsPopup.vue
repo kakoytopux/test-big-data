@@ -97,6 +97,7 @@ export default {
   background-color: #fff;
   border-radius: 6px;
   padding: 10px;
+  overflow-y: auto;
 }
 
 .popup__titles {
