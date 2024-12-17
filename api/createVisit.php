@@ -8,18 +8,24 @@
 
       $body = json_decode(file_get_contents('php://input'));
 
-      $selectDomain = $conn->query(
-        "SELECT id FROM domain WHERE domain='$body->domain'"
-      );
+      $selectDomain = $conn->prepare("SELECT id FROM domain WHERE domain=:domain");
+      $selectDomain->bindParam(':domain', $body->domain);
+      $selectDomain->execute();
       
       $domainId = $selectDomain->fetch(PDO::FETCH_ASSOC)['id'];
 
       if ($domainId) {
         $prepareVisit = $conn->prepare(
           "INSERT INTO visit (page, domain_id, ip, user_agent, browser, device, platform)
-          VALUES ('$body->page', '$domainId', '$_SERVER[REMOTE_ADDR]', '$body->user_agent', '$body->browser', '$body->device', '$body->platform')"
+          VALUES (:page, :domain_id, :ip, :user_agent, :browser, :device, :platform)"
         );
-
+        $prepareVisit->bindParam(':page', $body->page);
+        $prepareVisit->bindParam(':domain_id', $domainId);
+        $prepareVisit->bindParam(':ip', $_SERVER['REMOTE_ADDR']);
+        $prepareVisit->bindParam(':user_agent', $body->user_agent);
+        $prepareVisit->bindParam(':browser', $body->browser);
+        $prepareVisit->bindParam(':device', $body->device);
+        $prepareVisit->bindParam(':platform', $body->platform);
         $prepareVisit->execute();
 
         http_response_code(201);

@@ -7,16 +7,15 @@
       $conn->beginTransaction();
 
       $body = json_decode(file_get_contents('php://input'));
-      $prepareUser = $conn->prepare(
-        "INSERT INTO user (username) VALUES ('$body->username')"
-      );
-
+      $prepareUser = $conn->prepare("INSERT INTO user (username) VALUES (:username)");
+      $prepareUser->bindParam(':username', $body->username);
       $prepareUser->execute();
+
       $insertUserId = $conn->lastInsertId();
 
-      $selectVisit = $conn->query(
-        "SELECT * FROM visit WHERE ip='$_SERVER[REMOTE_ADDR]' ORDER BY id DESC LIMIT 1"
-      );
+      $selectVisit = $conn->prepare("SELECT * FROM visit WHERE ip=:ip ORDER BY id DESC LIMIT 1");
+      $selectVisit->bindParam(':ip', $_SERVER['REMOTE_ADDR']);
+      $selectVisit->execute();
 
       $visitData = $selectVisit->fetch(PDO::FETCH_ASSOC);
 
@@ -24,13 +23,10 @@
         "INSERT INTO user_domain (user_id, domain_id)
         VALUES ('$insertUserId',  '$visitData[domain_id]')"
       );
-
       $prepareDomain->execute();
 
-      $prepareContact = $conn->prepare(
-        "INSERT INTO contact (visit_id, info) VALUES ('$visitData[id]', '$body->info')"
-      );
-
+      $prepareContact = $conn->prepare("INSERT INTO contact (visit_id, info) VALUES ('$visitData[id]', :info)");
+      $prepareContact->bindParam(':info', $body->info);
       $prepareContact->execute();
 
       http_response_code(201);

@@ -1,26 +1,19 @@
 <template>
   <main>
-    <section class="domens">
-      <TableDomens />
-    </section>
+    <TableDomains />
   </main>
 </template>
 
 <script>
-  import TableDomens from './components/TableDomens.vue';
+  import TableDomains from './components/TableDomains.vue';
 
   export default {
     components: {
-      TableDomens
+      TableDomains
     }
   }
 </script>
 
 <style scoped>
-  .domens {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 50px;
-  }
+
 </style>

@@ -18,17 +18,9 @@
     try {
       $conn->beginTransaction();
 
-      $selectDomains = $conn->query(
-        "SELECT * FROM domain WHERE created_at >= NOW() - INTERVAL 7 DAY"
-      );
-
-      $selectVisits = $conn->query(
-        "SELECT * FROM visit"
-      );
-
-      $selectContacts = $conn->query(
-        "SELECT * FROM contact"
-      );
+      $selectDomains = $conn->query("SELECT * FROM domain WHERE created_at >= NOW() - INTERVAL 7 DAY");
+      $selectVisits = $conn->query("SELECT * FROM visit");
+      $selectContacts = $conn->query("SELECT * FROM contact");
 
       $domainsData = $selectDomains->fetchAll(PDO::FETCH_ASSOC);
       $visitsData = $selectVisits->fetchAll(PDO::FETCH_ASSOC);

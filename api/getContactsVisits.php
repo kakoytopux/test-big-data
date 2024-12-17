@@ -4,11 +4,17 @@
 
   if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
-      $selectDomains = $conn->query("SELECT * FROM domain");
-      $domainsData = $selectDomains->fetchAll(PDO::FETCH_ASSOC);
+      $selectContacts = $conn->query("SELECT * FROM contact");
+      $contactsData = $selectContacts->fetchAll(PDO::FETCH_ASSOC);
+
+      $response = [];
+
+      // foreach ($contactsData as $contactData) {
+        
+      // }
       
       http_response_code(200);
-      echo json_encode($domainsData);
+      echo json_encode($response);
     } catch (Exception $exception) {
       http_response_code(500);
       echo json_encode([
